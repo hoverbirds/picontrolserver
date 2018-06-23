@@ -45,23 +45,28 @@ export LD_LIBRARY_PATH=/usr/local/lib/
 export mavudp=1
 export picam=1
 #export uvccam=1
-export mavtcp=1
+#export mavtcp=1
 export hostapd=1
 #export sik=1
 #export lepton=1
 #export seek=1
-export interfaces=wlan0,zt0 # comma seperated list of interfaces, no spaces
-export beacon_interval=10000 # milli seocnds
+#export interfaces=wlan0,zt0 # comma seperated list of interfaces, no spaces
+export interfaces=zt0 # comma seperated list of interfaces, no spaces
+#export interfaces=wlan0 # comma seperated list of interfaces, no spaces
+export beacon_interval=1000 # milli seocnds
 
 # change unique id to something usefull to identify the vehicle 
-unique_id="sitl" 
+unique_id=sitl 
 if [ "x${unique_id}" == "x" ]; then
-	export unique_id=`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`
+	unique_id=`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`
 fi
+export unique_id;
 
+mv /home/pi/ardupilot/info/picontrolserver.log /home/pi/ardupilot/info/picontrolserver.log.bak
 date
 while :; do
          cd $AP_BIN_DIR 
          $AP_BIN_DIR/picontrolserver
          cd -
-done >> /home/pi/ardupilot/info/picontrolserver.log 2>&1
+#done >> /dev/null 2>&1
+done > /home/pi/ardupilot/info/picontrolserver.log 2>&1
