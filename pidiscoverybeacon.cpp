@@ -18,7 +18,10 @@ PiDiscoveryBeacon::PiDiscoveryBeacon(const QString &discoveryMessage, const QStr
 
 void PiDiscoveryBeacon::sendHelloDataGram()
 {
-    static QStringList subnets = broadcastSubnet();
+    static  QStringList subnets;
+    if (subnets.empty()) {
+	    subnets = broadcastSubnet();
+    }
 
     QString message = m_discoveryMessage;
     message += QString(" %1").arg(m_seqNumber);
